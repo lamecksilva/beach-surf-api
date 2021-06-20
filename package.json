@@ -1,0 +1,22 @@
+{
+  "name": "beach-surf-api",
+  "version": "1.0.0",
+  "description": "Api de gente grande",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start" : "yarn build && node dist/src/index.js"
+  },
+  "repository": "git@github.com:lamecksilva/beach-surf-api.git",
+  "author": "Lameck Sandro <lameck2@hotmail.com>",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {
+    "@types/module-alias": "^2.0.0",
+    "@types/node": "^15.12.4",
+    "typescript": "^4.3.4"
+  },
+  "dependencies": {
+    "module-alias": "^2.2.2"
+  }
+}
