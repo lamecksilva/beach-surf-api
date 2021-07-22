@@ -1,23 +1,14 @@
-import { ForecastPoint, StormGlass } from '@src/clients/stormGlass';
-import { InternalError } from '@src/util/errors/internal-errors';
-
-export enum BeachPosition {
-  S = 'S',
-  E = 'E',
-  W = 'W',
-  N = 'N',
-}
-
-export interface Beach {
-  name: string;
-  position: BeachPosition;
-  lat: number;
-  lng: number;
-  user: string;
-}
+import { StormGlass, ForecastPoint } from '@src/clients/stormGlass';
+import { InternalError } from '@src/util/errors/internal-error';
+import { Beach } from '@src/models/beach';
 
 // 'Omit' Exclui campos da interface passada por "parâmetro"
 export interface BeachForecast extends Omit<Beach, 'user'>, ForecastPoint {}
+
+export interface TimeForecast {
+  time: string;
+  forecast: BeachForecast[];
+}
 
 // Internal Error
 export class ForecastProcessingInternalError extends InternalError {
@@ -41,30 +32,43 @@ export class Forecast {
    */
   public async processForecastForBeaches(
     beaches: Beach[]
-  ): Promise<BeachForecast[]> {
+  ): Promise<TimeForecast[]> {
     const pointsWithCorrectSources: BeachForecast[] = [];
-
     try {
       for (const beach of beaches) {
         const points = await this.stormGlass.fetchPoints(beach.lat, beach.lng);
-
-        const enrichedBeachData = this.enrichedBeachData(points, beach);
-
+        const enrichedBeachData = this.enrichBeachData(points, beach);
         pointsWithCorrectSources.push(...enrichedBeachData);
       }
-
-      return pointsWithCorrectSources;
-    } catch (err) {
-      throw new ForecastProcessingInternalError(err.message);
+      return this.mapForecastByTime(pointsWithCorrectSources);
+    } catch (error) {
+      throw new ForecastProcessingInternalError(error.message);
     }
   }
 
+  private mapForecastByTime(forecast: BeachForecast[]): TimeForecast[] {
+    const forecastByTime: TimeForecast[] = [];
+    for (const point of forecast) {
+      const timePoint = forecastByTime.find((f) => f.time === point.time);
+      if (timePoint) {
+        timePoint.forecast.push(point);
+      } else {
+        forecastByTime.push({
+          time: point.time,
+          forecast: [point],
+        });
+      }
+    }
+    return forecastByTime;
+  }
+
   // Une os dados dos forecasts com os da praia
-  private enrichedBeachData(
+  private enrichBeachData(
     points: ForecastPoint[],
     beach: Beach
   ): BeachForecast[] {
     return points.map((e) => ({
+      ...{},
       ...{
         lat: beach.lat,
         lng: beach.lng,

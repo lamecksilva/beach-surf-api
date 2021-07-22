@@ -1,5 +1,5 @@
 import * as HTTPUtil from '@src/util/request';
-import { InternalError } from '@src/util/errors/internal-errors';
+import { InternalError } from '@src/util/errors/internal-error';
 import config, { IConfig } from 'config';
 
 export interface StormGlassPointSource {
