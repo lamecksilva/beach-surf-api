@@ -1,12 +1,13 @@
 {
   "App": {
+    "port": 9000,
     "database": {
       "mongoUrl": "mongodb://localhost:27017/beach-surf-api"
     },
     "resources": {
       "StormGlass": {
         "apiUrl": "https://api.stormglass.io/v2",
-        "apiToken": "do-not-hard-code"
+        "apiToken": "41c7f5d2-d2e6-11eb-80d0-0242ac130002-41c7f654-d2e6-11eb-80d0-0242ac13000"
       }
     }
   }
