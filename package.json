@@ -13,7 +13,7 @@
     "style:fix": "prettier --write 'src/**/*.ts' 'test/**/*.ts'",
     "test": "yarn test:unit && yarn test:functional",
     "test:unit": "jest",
-    "test:functional": "jest --projects ./test --runInBand"
+    "test:functional": "jest --projects ./test --runInBand --detectOpenHandles"
   },
   "repository": "git@github.com:lamecksilva/beach-surf-api.git",
   "author": "Lameck Sandro <lameck2@hotmail.com>",
@@ -43,11 +43,13 @@
   },
   "dependencies": {
     "@overnightjs/core": "^1.7.6",
+    "@types/jsonwebtoken": "^8.5.4",
     "axios": "^0.21.1",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "config": "^3.3.6",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "module-alias": "^2.2.2",
     "mongoose": "^5.13.2"
   }
