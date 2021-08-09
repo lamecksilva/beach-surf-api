@@ -3,6 +3,7 @@ import { ClassMiddleware, Controller, Post } from '@overnightjs/core';
 import { authMiddleware } from '@src/middlewares/auth';
 import { Beach } from '@src/models/beach';
 import Mongoose from 'mongoose';
+import logger from '@src/logger';
 
 @Controller('beaches')
 @ClassMiddleware(authMiddleware)
@@ -15,6 +16,8 @@ export class BeachesController {
 
       res.status(201).send(result);
     } catch (error) {
+      logger.error(error);
+
       if (error instanceof Mongoose.Error.ValidationError) {
         res.status(422).send({ error: error.message });
       } else {
