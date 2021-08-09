@@ -9,7 +9,7 @@ import { UsersController } from './controllers/user';
 import logger from './logger';
 
 export class SetupServer extends Server {
-  constructor(private port = 9000) {
+  constructor(private port = 3000) {
     super();
   }
 
@@ -26,9 +26,13 @@ export class SetupServer extends Server {
   private setupControllers(): void {
     const forecastController = new ForecastController();
     const beachesController = new BeachesController();
-    const usersController = new UsersController()
+    const usersController = new UsersController();
 
-    this.addControllers([forecastController, beachesController, usersController]);
+    this.addControllers([
+      forecastController,
+      beachesController,
+      usersController,
+    ]);
   }
 
   private async databaseSetup(): Promise<void> {
@@ -43,9 +47,9 @@ export class SetupServer extends Server {
     return this.app;
   }
 
-  public start():void{
+  public start(): void {
     this.app.listen(this.port, () => {
-      logger.info("Server listening on port: ", this.port)
-    })
+      logger.info(`Server listening on port: ${this.port}`);
+    });
   }
 }
