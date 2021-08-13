@@ -51,6 +51,7 @@ export class UsersController extends BaseController {
   public async me(req: Request, res: Response): Promise<Response> {
     const email = req.decoded ? req.decoded.email : undefined;
     const user = await User.findOne({ email });
+    // const user = await User.findOne({ email }, { password: 0, __v: 0 });
 
     if (!user) {
       return this.sendErrorResponse(res, {
@@ -59,6 +60,6 @@ export class UsersController extends BaseController {
       });
     }
 
-    return res.send({ user });
+    return res.send({ user: user.toJSON() });
   }
 }
