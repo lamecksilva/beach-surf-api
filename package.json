@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "yarn build && node dist/src/index.js",
+    "start": "yarn build && node dist/src/index.js | pino-pretty -c",
     "start:local": "ts-node-dev 'src/index.ts' --files | pino-pretty -c",
     "lint": "eslint ./src ./test --ext .ts",
     "lint:fix": "eslint ./src ./test --ext .ts --fix",
@@ -31,10 +31,12 @@
     "@types/lodash": "^4.14.172",
     "@types/module-alias": "^2.0.0",
     "@types/mongoose": "^5.11.97",
+    "@types/multer": "^1.4.7",
     "@types/nock": "^11.1.0",
     "@types/node": "^15.12.4",
     "@types/pino": "^6.3.11",
     "@types/supertest": "^2.0.11",
+    "@types/swagger-ui-express": "^4.1.3",
     "@typescript-eslint/eslint-plugin": "^4.27.0",
     "@typescript-eslint/parser": "^4.27.0",
     "eslint": "^7.29.0",
@@ -56,12 +58,14 @@
     "config": "^3.3.6",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-openapi-validator": "3.16.1",
     "express-pino-logger": "^6.0.0",
     "http-status-codes": "^2.1.4",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "module-alias": "^2.2.2",
     "mongoose": "^5.13.2",
-    "pino": "^6.13.0"
+    "pino": "^6.13.0",
+    "swagger-ui-express": "^4.1.6"
   }
 }
