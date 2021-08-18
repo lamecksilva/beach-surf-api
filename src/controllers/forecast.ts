@@ -4,8 +4,11 @@ import { Beach } from '@src/models/beach';
 import { Forecast } from '@src/services/forecast';
 import { Request, Response } from 'express';
 import { BaseController } from '.';
+import rateLimit from 'express-rate-limit';
 
 const forecast = new Forecast();
+
+const rateLimiter = rateLimit({});
 
 @Controller('forecast')
 @ClassMiddleware(authMiddleware)
