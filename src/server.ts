@@ -7,8 +7,8 @@ import cors from 'cors';
 import apiSchema from './api.schema.json';
 import swaggerUi from 'swagger-ui-express';
 
-import {OpenApiValidator} from 'express-openapi-validator'
-import {OpenAPIV3} from 'express-openapi-validator/dist/framework/types'
+import { OpenApiValidator } from 'express-openapi-validator';
+import { OpenAPIV3 } from 'express-openapi-validator/dist/framework/types';
 
 import * as database from './database';
 import { ForecastController } from './controllers/forecast';
@@ -27,7 +27,7 @@ export class SetupServer extends Server {
     await this.docsSetup();
     this.setupControllers();
     await this.databaseSetup();
-    this.setupErrorHandlers()
+    this.setupErrorHandlers();
   }
 
   private setupExpress(): void {
@@ -44,7 +44,7 @@ export class SetupServer extends Server {
     );
   }
 
-  private setupErrorHandlers() :void {
+  private setupErrorHandlers(): void {
     this.app.use(apiErrorValidator);
   }
 
@@ -72,9 +72,9 @@ export class SetupServer extends Server {
     this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(apiSchema));
     await new OpenApiValidator({
       apiSpec: apiSchema as OpenAPIV3.Document,
-      validateRequests: true,
-      validateResponses:true 
-    }).install(this.app)
+      validateRequests: false,
+      validateResponses: true,
+    }).install(this.app);
   }
   public getApp(): Application {
     return this.app;
