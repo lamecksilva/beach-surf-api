@@ -33,6 +33,7 @@ describe('AuthMiddleware', () => {
 
     const nextFake = jest.fn();
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     authMiddleware(reqFake, resFake as Record<string, any>, nextFake);
     expect(resFake.status).toHaveBeenCalledWith(401);
     expect(sendMock).toHaveBeenCalledWith({
@@ -53,6 +54,7 @@ describe('AuthMiddleware', () => {
 
     const nextFake = jest.fn();
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     authMiddleware(reqFake, resFake as Record<string, any>, nextFake);
     expect(resFake.status).toHaveBeenCalledWith(401);
     expect(sendMock).toHaveBeenCalledWith({
