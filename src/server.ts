@@ -1,6 +1,6 @@
 import './util/module-alias';
 import { Server } from '@overnightjs/core';
-import { Application } from 'express';
+import { Application, Request, Response } from 'express';
 import { json } from 'body-parser';
 import expressPino from 'express-pino-logger';
 import cors from 'cors';
@@ -58,6 +58,10 @@ export class SetupServer extends Server {
       beachesController,
       usersController,
     ]);
+
+    this.app.get('/', (_: Partial<Request>, res: Response): void => {
+      res.send(`Beach Surf API on port: ${this.port}`);
+    });
   }
 
   private async databaseSetup(): Promise<void> {

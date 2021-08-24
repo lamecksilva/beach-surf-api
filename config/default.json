@@ -1,6 +1,6 @@
 {
   "App": {
-    "port": 3000,
+    "port": 9000,
     "database": {
       "mongoUrl": "mongodb://localhost:27017/beach-surf-api"
     },
