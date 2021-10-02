@@ -1,11 +1,12 @@
 import './util/module-alias';
 import { Server } from '@overnightjs/core';
-import { Application, Request, Response } from 'express';
+import e, { Application, Request, Response } from 'express';
 import { json } from 'body-parser';
 import expressPino from 'express-pino-logger';
 import cors from 'cors';
 import apiSchema from './api.schema.json';
 import swaggerUi from 'swagger-ui-express';
+import listEndpoints from 'express-list-endpoints';
 
 import { OpenApiValidator } from 'express-openapi-validator';
 import { OpenAPIV3 } from 'express-openapi-validator/dist/framework/types';
@@ -24,8 +25,10 @@ export class SetupServer extends Server {
 
   public async init(): Promise<void> {
     this.setupExpress();
+
     await this.docsSetup();
     this.setupControllers();
+
     await this.databaseSetup();
     this.setupErrorHandlers();
   }
@@ -49,14 +52,14 @@ export class SetupServer extends Server {
   }
 
   private setupControllers(): void {
-    const forecastController = new ForecastController();
-    const beachesController = new BeachesController();
     const usersController = new UsersController();
+    const beachesController = new BeachesController();
+    const forecastController = new ForecastController();
 
     this.addControllers([
-      forecastController,
-      beachesController,
       usersController,
+      beachesController,
+      forecastController,
     ]);
 
     this.app.get('/', (_: Partial<Request>, res: Response): void => {
@@ -88,5 +91,8 @@ export class SetupServer extends Server {
     this.app.listen(this.port, () => {
       logger.info(`Server listening on port: ${this.port}`);
     });
+
+    process.env.NODE_ENV === 'development' &&
+      console.info('Rotas: ', listEndpoints(this.app as e.Express));
   }
 }
